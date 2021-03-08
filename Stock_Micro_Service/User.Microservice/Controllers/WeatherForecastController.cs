@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sidecar.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace User.Microservice.Controllers
+namespace Authentication.Microservice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -31,7 +32,7 @@ namespace User.Microservice.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Summary = Summaries[rng.Next(Summaries.Length)]+ SYS_DATA.DB_Connection
             })
             .ToArray();
         }

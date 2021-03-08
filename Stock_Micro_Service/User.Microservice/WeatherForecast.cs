@@ -1,6 +1,6 @@
 using System;
 
-namespace User.Microservice
+namespace Authentication.Microservice
 {
     public class WeatherForecast
     {
