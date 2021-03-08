@@ -9,6 +9,6 @@ namespace Authentication.Microservice.Service
 {
     public interface IUserService : IBaseService<Users>
     {
-        Task<List<Users>> GetRole();
+        Task<IEnumerable<Users>> GetRole();
     }
 }

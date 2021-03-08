@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,6 +22,7 @@ namespace Authentication.Microservice.Controllers
         }
         // GET: api/<UsersController>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Users>), (int)HttpStatusCode.OK)]
         public async Task<IEnumerable<Users>> Get()
         {
             return await userService.GetRole();
@@ -28,9 +30,9 @@ namespace Authentication.Microservice.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Users> Get(Guid id)
         {
-            return "value";
+            return await userService.Get(id);
         }
 
         // POST api/<UsersController>

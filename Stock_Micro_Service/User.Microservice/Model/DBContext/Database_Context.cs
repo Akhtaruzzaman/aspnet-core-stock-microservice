@@ -9,14 +9,9 @@ namespace Authentication.Microservice.Model.DBContext
 {
     public class Database_Context : DbContext
     {
-        public Database_Context()
-            : base(GetOptions())
+        public Database_Context(DbContextOptions<Database_Context> options)
+        : base(options)
         {
-        }
-
-        private static DbContextOptions GetOptions()
-        {
-            return SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), SYS_DATA.DB_Connection).Options;
         }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }

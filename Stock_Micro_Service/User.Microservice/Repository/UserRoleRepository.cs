@@ -6,5 +6,9 @@ namespace Authentication.Microservice.Repository
 {
     public class UserRoleRepository : BaseRepository<UserRole, Database_Context>, IUserRoleRepository
     {
+        public UserRoleRepository(Database_Context database_Context) : base(database_Context)
+        {
+
+        }
     }
 }

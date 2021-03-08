@@ -13,5 +13,7 @@ namespace Authentication.Microservice.Model
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        [NotMapped]
+        public int TotalRole { get; set; }
     }
 }
