@@ -1,3 +1,4 @@
+using Authentication.Microservice.Model.DBContext;
 using Authentication.Microservice.Repository;
 using Authentication.Microservice.Service;
 using Infrastructure.Common.Repository;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,11 +32,15 @@ namespace User.Microservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             SYS_DATA.DB_Connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<Database_Context>(options =>
+              options.UseSqlServer(SYS_DATA.DB_Connection));
+
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -11,7 +11,7 @@ namespace Authentication.Microservice.Model
     public class UserRole : BaseEntity
     {
         public Guid UsersId { get; set; }
-        public virtual Users Users { get; set; }
+        public Users Users { get; set; }
         public int Sn { get; set; }
     }
 }
