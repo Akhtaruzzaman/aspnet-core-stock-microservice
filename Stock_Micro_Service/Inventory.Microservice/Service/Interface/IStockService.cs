@@ -9,5 +9,7 @@ namespace Inventory.Microservice.Service.Interface
 {
     public interface IStockService : IBaseService<Stock>
     {
+        IEnumerable<Stock> GetAllStock();
+        Stock GetStockbyProductId(Guid id);
     }
 }

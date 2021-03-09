@@ -23,16 +23,16 @@ namespace Inventory.Microservice.Controllers
         // GET: api/<StockController>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Stock>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Stock>>> Get()
+        public ActionResult<IEnumerable<Stock>> Get()
         {
-            var data = await stockService.GetAll();
+            var data = stockService.GetAllStock();
             return Ok(data);
         }
         // GET api/<StockController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Stock>>> Get(Guid id)
+        public ActionResult<Stock> Get(Guid id)
         {
-            var data = await stockService.Get(id);
+            var data = stockService.GetStockbyProductId(id);
             return Ok(data);
         }
 
