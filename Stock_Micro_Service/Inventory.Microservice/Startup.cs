@@ -1,7 +1,13 @@
+using Inventory.Microservice.Model.DBContext;
+using Inventory.Microservice.Repository;
+using Inventory.Microservice.Repository.Interface;
+using Inventory.Microservice.Service;
+using Inventory.Microservice.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +34,15 @@ namespace Inventory.Microservice
         public void ConfigureServices(IServiceCollection services)
         {
             SYS_DATA.DB_Connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<Database_Context>(options =>
+              options.UseSqlServer(SYS_DATA.DB_Connection));
+
+
+            services.AddTransient<IStockService, StockService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
