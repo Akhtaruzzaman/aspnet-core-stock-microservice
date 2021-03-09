@@ -13,6 +13,7 @@ namespace Purchase.Microservice.Model.DBContext
         : base(options)
         {
         }
+        public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<PurchaseDetails> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseMaster> PurchaseMaster { get; set; }
     }

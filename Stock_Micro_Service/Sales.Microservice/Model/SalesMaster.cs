@@ -10,8 +10,9 @@ namespace Sales.Microservice.Model
     [Table("SalesMaster")]
     public class SalesMaster : BaseEntity
     {
-        public string voucher_no { get; set; }
-        public string remarks { get; set; }
-        public Guid customer_id { get; set; }
+        public string VoucherNo { get; set; }
+        public string Remarks { get; set; }
+        public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

@@ -10,8 +10,9 @@ namespace Purchase.Microservice.Model
     [Table("PurchaseMaster")]
     public class PurchaseMaster : BaseEntity
     {
-        public string voucher_no { get; set; }
-        public string remarks { get; set; }
-        public Guid supplier_id { get; set; }
+        public string VoucherNo { get; set; }
+        public string Remarks { get; set; }
+        public Guid SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

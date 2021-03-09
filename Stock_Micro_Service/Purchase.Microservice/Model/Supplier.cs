@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Supplier.Microservice.Model
+namespace Purchase.Microservice.Model
 {
     [Table("Supplier")]
-    public class Supplier:BaseEntity
+    public class Supplier : BaseEntity
     {
-        public string name { get; set; }
-        public string address { get; set; }
-        public string mobile { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Mobile { get; set; }
     }
 }

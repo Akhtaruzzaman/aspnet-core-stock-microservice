@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Purchase.Microservice.Model.DBContext;
 using Sidecar.Common;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,8 @@ namespace Purchase.Microservice
         public void ConfigureServices(IServiceCollection services)
         {
             SYS_DATA.DB_Connection = Configuration.GetConnectionString("DefaultConnection");
-
+            services.AddDbContext<Database_Context>(options =>
+              options.UseSqlServer(SYS_DATA.DB_Connection));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -10,9 +10,9 @@ namespace Purchase.Microservice.Model
     [Table("PurchaseDetails")]
     public class PurchaseDetails : BaseEntity
     {
-        public Guid product_id { get; set; }
-        public decimal qty { get; set; }
-        public decimal unit_price { get; set; }
-        public decimal amount { get; set; }
+        public Guid ProductId { get; set; }
+        public decimal Qty { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal Amount { get; set; }
     }
 }

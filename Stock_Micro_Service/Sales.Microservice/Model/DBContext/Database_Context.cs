@@ -13,6 +13,7 @@ namespace Sales.Microservice.Model.DBContext
         : base(options)
         {
         }
+        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<SalesDetails> SalesDetails { get; set; }
         public virtual DbSet<SalesMaster> SalesMaster { get; set; }
     }
