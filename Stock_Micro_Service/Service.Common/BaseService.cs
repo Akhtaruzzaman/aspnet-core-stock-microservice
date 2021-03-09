@@ -28,10 +28,11 @@ namespace Service.Common
             }
         }
 
-        public async Task<bool> Delete(T entity)
+        public async Task<bool> Delete(Guid id)
         {
             try
             {
+                var entity = await repository.Get(id);
                 bool result = await repository.Delete(entity);
                 return await Task.FromResult(result);
             }
@@ -43,7 +44,15 @@ namespace Service.Common
 
         public async Task<T> Get(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                T result = await repository.Get(id);
+                return await Task.FromResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<IEnumerable<T>> GetAll()
@@ -61,7 +70,15 @@ namespace Service.Common
 
         public async Task<bool> Update(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                bool result = await repository.Update(entity);
+                return await Task.FromResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

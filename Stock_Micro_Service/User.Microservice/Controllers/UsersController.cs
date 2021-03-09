@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,34 +22,76 @@ namespace Authentication.Microservice.Controllers
         }
         // GET: api/<UsersController>
         [HttpGet]
-        public async Task<IEnumerable<Users>> Get()
+        [ProducesResponseType(typeof(IEnumerable<Users>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<Users>>> Get()
         {
-            return await userService.GetRole();
+            var data = await userService.GetAll();
+            return Ok(data);
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(typeof(Users), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Users>> Get(Guid id)
         {
-            return "value";
+            try
+            {
+                var data = await userService.Get(id);
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<UsersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult> Post([FromBody] Users value)
         {
+            try
+            {
+                var result = await userService.Add(value);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult> Put([FromBody] Users value)
         {
+            try
+            {
+                var result = await userService.Update(value);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesDefaultResponseType]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult> Delete(Guid id)
         {
+            try
+            {
+                var result = await userService.Delete(id);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }
