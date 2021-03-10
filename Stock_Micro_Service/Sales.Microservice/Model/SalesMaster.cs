@@ -14,5 +14,6 @@ namespace Sales.Microservice.Model
         public string Remarks { get; set; }
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public virtual ICollection<SalesDetails> SalesDetails { get; set; }
     }
 }

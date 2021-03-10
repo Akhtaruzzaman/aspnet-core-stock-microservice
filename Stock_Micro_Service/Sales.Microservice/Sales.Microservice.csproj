@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Model.Common\Model.Common.csproj" />
     <ProjectReference Include="..\Service.Common\Service.Common.csproj" />
     <ProjectReference Include="..\Sidecar.Common\Sidecar.Common.csproj" />
+    <ProjectReference Include="..\Util.Common\Util.Common.csproj" />
   </ItemGroup>
 
 </Project>

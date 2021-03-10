@@ -15,7 +15,7 @@ namespace Service.Common
         {
             this.repository = repository;
         }
-        public async Task<bool> Add(T entity)
+        public virtual async Task<bool> Add(T entity)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Service.Common
             }
         }
 
-        public async Task<bool> Delete(Guid id)
+        public virtual async Task<bool> Delete(Guid id)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Service.Common
             }
         }
 
-        public async Task<bool> Update(T entity)
+        public virtual async Task<bool> Update(T entity)
         {
             try
             {
