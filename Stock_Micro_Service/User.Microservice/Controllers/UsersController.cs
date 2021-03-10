@@ -20,6 +20,11 @@ namespace Authentication.Microservice.Controllers
         {
             this.userService = userService;
         }
+
+        public UsersController()
+        {
+        }
+
         // GET: api/<UsersController>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Users>), (int)HttpStatusCode.OK)]

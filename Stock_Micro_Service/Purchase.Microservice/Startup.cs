@@ -9,6 +9,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Purchase.Microservice.Model.DBContext;
+using Purchase.Microservice.Repository;
+using Purchase.Microservice.Repository.Interface;
+using Purchase.Microservice.Service;
+using Purchase.Microservice.Service.Interface;
 using Sidecar.Common;
 using System;
 using System.Collections.Generic;
@@ -32,6 +36,10 @@ namespace Purchase.Microservice
             SYS_DATA.DB_Connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Database_Context>(options =>
               options.UseSqlServer(SYS_DATA.DB_Connection));
+
+            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
