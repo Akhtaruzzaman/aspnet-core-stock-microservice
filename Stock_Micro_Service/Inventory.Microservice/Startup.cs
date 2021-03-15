@@ -43,6 +43,7 @@ namespace Inventory.Microservice
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
 
+            services.AddCors();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -60,6 +61,7 @@ namespace Inventory.Microservice
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inventory.Microservice v1"));
             }
+            app.UseCors(options => options.WithOrigins("https://localhost:44382").AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
