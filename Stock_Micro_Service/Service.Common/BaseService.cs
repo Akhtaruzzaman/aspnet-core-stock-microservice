@@ -19,6 +19,8 @@ namespace Service.Common
         {
             try
             {
+                entity.CreatedAt = DateTime.Now;
+                entity.Id = Guid.NewGuid();
                 bool result = await repository.Add(entity);
                 return await Task.FromResult(result);
             }
@@ -72,6 +74,7 @@ namespace Service.Common
         {
             try
             {
+                entity.UpdatedAt = DateTime.Now;
                 bool result = await repository.Update(entity);
                 return await Task.FromResult(result);
             }

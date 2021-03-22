@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Authentication.Microservice.Model
@@ -12,6 +13,7 @@ namespace Authentication.Microservice.Model
     {
         public string name { get; set; }
         public string email { get; set; }
+        [JsonIgnore]
         public string password { get; set; }
         [NotMapped]
         public int TotalRole { get; set; }

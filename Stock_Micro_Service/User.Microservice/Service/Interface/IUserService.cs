@@ -1,4 +1,5 @@
 ﻿using Authentication.Microservice.Model;
+using Authentication.Microservice.Model.ViewModel;
 using Service.Common;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace Authentication.Microservice.Service
     public interface IUserService : IBaseService<Users>
     {
         Task<IEnumerable<Users>> GetRole();
+        Task<string> Authenticate(LoginVm value);
     }
 }

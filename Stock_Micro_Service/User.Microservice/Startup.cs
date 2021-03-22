@@ -1,3 +1,4 @@
+using Authentication.Microservice.Helper;
 using Authentication.Microservice.Model.DBContext;
 using Authentication.Microservice.Repository;
 using Authentication.Microservice.Service;
@@ -17,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Util.Common;
 
 namespace User.Microservice
 {
@@ -37,10 +39,13 @@ namespace User.Microservice
             services.AddDbContext<Database_Context>(options =>
               options.UseSqlServer(SYS_DATA.DB_Connection));
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,6 +68,14 @@ namespace User.Microservice
 
             app.UseRouting();
 
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

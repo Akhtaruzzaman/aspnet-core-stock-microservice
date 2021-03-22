@@ -3,6 +3,7 @@ using Inventory.Microservice.Repository;
 using Inventory.Microservice.Repository.Interface;
 using Inventory.Microservice.Service;
 using Inventory.Microservice.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,6 +46,23 @@ namespace Inventory.Microservice
 
             services.AddCors();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "https://localhost:44352";
+                o.Audience = "myresourceapi";
+                o.RequireHttpsMetadata = false;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PublicSecure", policy => policy.RequireClaim("client_id", "secret_client_id"));
+            });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -67,6 +85,7 @@ namespace Inventory.Microservice
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

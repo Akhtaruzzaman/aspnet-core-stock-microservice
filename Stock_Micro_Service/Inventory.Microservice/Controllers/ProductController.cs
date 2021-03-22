@@ -1,5 +1,6 @@
 ﻿using Inventory.Microservice.Model;
 using Inventory.Microservice.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Microservice.Controllers
 {
+    [Authorize(Policy = "PublicSecure")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

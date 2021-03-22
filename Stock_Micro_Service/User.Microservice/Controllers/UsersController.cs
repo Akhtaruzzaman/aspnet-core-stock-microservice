@@ -1,5 +1,7 @@
-﻿using Authentication.Microservice.Model;
+﻿using Authentication.Microservice.Helper;
+using Authentication.Microservice.Model;
 using Authentication.Microservice.Service;
+using JwtAuth.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Authentication.Microservice.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -19,10 +22,6 @@ namespace Authentication.Microservice.Controllers
         public UsersController(IUserService userService)
         {
             this.userService = userService;
-        }
-
-        public UsersController()
-        {
         }
 
         // GET: api/<UsersController>
