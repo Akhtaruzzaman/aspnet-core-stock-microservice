@@ -38,8 +38,13 @@ namespace Purchase.Microservice
             services.AddDbContext<Database_Context>(options =>
               options.UseSqlServer(SYS_DATA.DB_Connection));
 
+            services.AddTransient<IPurchaseMasterService, PurchaseMasterService>();
             services.AddTransient<ISupplierService, SupplierService>();
+
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IPurchaseDetailsRepository, PurchaseDetailsRepository>();
+            services.AddScoped<IPurchaseMasterRepository, PurchaseMasterRepository>();
+
 
             services.AddControllers();
 

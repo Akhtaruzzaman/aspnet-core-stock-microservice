@@ -28,7 +28,7 @@ namespace Inventory.Microservice.Service
                         ProductId = t.FirstOrDefault().ProductId,
                         in_qty = t.Sum(x => x.in_qty),
                         out_qty = t.Sum(x => x.out_qty),
-                        balance_qty = t.LastOrDefault().balance_qty
+                        balance_qty = t.Sum(x => x.in_qty) - t.Sum(x => x.out_qty)
                     }).FirstOrDefault();
                     decimal bl_qty = 0;
                     if (last_stock != null)
@@ -56,7 +56,7 @@ namespace Inventory.Microservice.Service
                     ProductId = t.FirstOrDefault().ProductId,
                     in_qty = t.Sum(x => x.in_qty),
                     out_qty = t.Sum(x => x.out_qty),
-                    balance_qty = t.LastOrDefault().balance_qty
+                    balance_qty = t.Sum(x => x.in_qty)- t.Sum(x => x.out_qty)
                 });
                 return query;
             }
@@ -75,7 +75,7 @@ namespace Inventory.Microservice.Service
                     ProductId = t.FirstOrDefault().ProductId,
                     in_qty = t.Sum(x => x.in_qty),
                     out_qty = t.Sum(x => x.out_qty),
-                    balance_qty = t.LastOrDefault().balance_qty
+                    balance_qty = t.Sum(x => x.in_qty) - t.Sum(x => x.out_qty)
                 }).FirstOrDefault();
                 return query;
             }
