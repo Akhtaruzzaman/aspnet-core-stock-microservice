@@ -27,8 +27,8 @@ namespace Infrastructure.Common.Repository
         Task<int> Count();
         Task<int> Count(Expression<Func<T, bool>> expression);
         Task<T> Get(Guid id);
-        IQueryable<T> GetAll();
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> expression);
         /// <summary>
         /// Get any by expression first or default
         /// </summary>

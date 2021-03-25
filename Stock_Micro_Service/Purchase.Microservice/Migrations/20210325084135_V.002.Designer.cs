@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Sales.Microservice.Model.DBContext;
+using Purchase.Microservice.Model.DBContext;
 
-namespace Sales.Microservice.Migrations
+namespace Purchase.Microservice.Migrations
 {
     [DbContext(typeof(Database_Context))]
-    partial class Database_ContextModelSnapshot : ModelSnapshot
+    [Migration("20210325084135_V.002")]
+    partial class V002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,81 @@ namespace Sales.Microservice.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Sales.Microservice.Model.Customer", b =>
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PurchaseMasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Qty")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseMasterId");
+
+                    b.ToTable("PurchaseDetails");
+                });
+
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseMaster", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VoucherNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PurchaseMaster");
+                });
+
+            modelBuilder.Entity("Purchase.Microservice.Model.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,108 +124,34 @@ namespace Sales.Microservice.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("Sales.Microservice.Model.SalesDetails", b =>
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseDetails", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Qty")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("SalesMasterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SalesMasterId");
-
-                    b.ToTable("SalesDetails");
-                });
-
-            modelBuilder.Entity("Sales.Microservice.Model.SalesMaster", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("VoucherNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("SalesMaster");
-                });
-
-            modelBuilder.Entity("Sales.Microservice.Model.SalesDetails", b =>
-                {
-                    b.HasOne("Sales.Microservice.Model.SalesMaster", "SalesMaster")
-                        .WithMany("SalesDetails")
-                        .HasForeignKey("SalesMasterId")
+                    b.HasOne("Purchase.Microservice.Model.PurchaseMaster", "PurchaseMaster")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("PurchaseMasterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SalesMaster");
+                    b.Navigation("PurchaseMaster");
                 });
 
-            modelBuilder.Entity("Sales.Microservice.Model.SalesMaster", b =>
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseMaster", b =>
                 {
-                    b.HasOne("Sales.Microservice.Model.Customer", "Customer")
+                    b.HasOne("Purchase.Microservice.Model.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Sales.Microservice.Model.SalesMaster", b =>
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseMaster", b =>
                 {
-                    b.Navigation("SalesDetails");
+                    b.Navigation("PurchaseDetails");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,8 +1,10 @@
+using EventBus.Common.Common;
 using Inventory.Microservice.Model.DBContext;
 using Inventory.Microservice.Repository;
 using Inventory.Microservice.Repository.Interface;
 using Inventory.Microservice.Service;
 using Inventory.Microservice.Service.Interface;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,24 +48,42 @@ namespace Inventory.Microservice
 
             services.AddCors();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "https://localhost:44352";
-                o.Audience = "myresourceapi";
-                o.RequireHttpsMetadata = false;
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(o =>
+            //{
+            //    o.Authority = "https://localhost:44352";
+            //    o.Audience = "myresourceapi";
+            //    o.RequireHttpsMetadata = false;
+            //});
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("PublicSecure", policy => policy.RequireClaim("client_id", "secret_client_id"));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("PublicSecure", policy => policy.RequireClaim("client_id", "secret_client_id"));
+            //});
 
 
             services.AddControllers();
+
+
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<InventoryConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.ReceiveEndpoint(EventBusConstants.InventoryQueue, c =>
+                    {
+                        c.ConfigureConsumer<InventoryConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inventory.Microservice", Version = "v1" });

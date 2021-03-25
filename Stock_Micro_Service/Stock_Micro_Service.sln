@@ -41,9 +41,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util.Common", "Util.Common\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging.Common", "Logging.Common\Logging.Common.csproj", "{EAD36C8D-BBBE-47EC-9E6F-7B6CF68B74DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtAuth.Common", "JwtAuth.Common\JwtAuth.Common.csproj", "{00161870-039F-449D-B618-63A69E77D6E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuth.Common", "JwtAuth.Common\JwtAuth.Common.csproj", "{00161870-039F-449D-B618-63A69E77D6E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Common", "EventBus.Common\EventBus.Common.csproj", "{AD694025-0F2E-45F8-AD67-32561C9ED73E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,10 @@ Global
 		{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD694025-0F2E-45F8-AD67-32561C9ED73E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD694025-0F2E-45F8-AD67-32561C9ED73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD694025-0F2E-45F8-AD67-32561C9ED73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD694025-0F2E-45F8-AD67-32561C9ED73E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{EAD36C8D-BBBE-47EC-9E6F-7B6CF68B74DB} = {C3867C9C-23EE-4A2A-B9A4-4649CE5A7685}
 		{00161870-039F-449D-B618-63A69E77D6E6} = {C3867C9C-23EE-4A2A-B9A4-4649CE5A7685}
 		{CF007BF0-F31D-4FCA-A893-FA8F226F5EF3} = {3CCF403B-1C0F-4733-A620-FA1E3A889624}
+		{AD694025-0F2E-45F8-AD67-32561C9ED73E} = {C3867C9C-23EE-4A2A-B9A4-4649CE5A7685}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D403B47-BC24-427C-BEFE-B71CC1090C02}

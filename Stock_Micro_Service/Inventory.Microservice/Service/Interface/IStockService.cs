@@ -11,5 +11,6 @@ namespace Inventory.Microservice.Service.Interface
     {
         IEnumerable<Stock> GetAllStock();
         Stock GetStockbyProductId(Guid id);
+        Task<bool> AddRange(List<Stock> stock);
     }
 }

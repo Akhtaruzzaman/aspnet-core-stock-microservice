@@ -1,7 +1,6 @@
-﻿using Inventory.Microservice.Model;
-using Inventory.Microservice.Service.Interface;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sales.Microservice.Model;
+using Sales.Microservice.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +9,32 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Inventory.Microservice.Controllers
+namespace Sales.Microservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class SalesController : ControllerBase
     {
-        IProductService productService;
-        public ProductController(IProductService productService)
+        private readonly ISalesMasterService salesMasterService;
+        public SalesController(ISalesMasterService salesMasterService)
         {
-            this.productService = productService;
+            this.salesMasterService = salesMasterService;
         }
-        // GET: api/<ProductController>
+        // GET: api/<SalesController>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        [ProducesResponseType(typeof(IEnumerable<SalesMaster>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<SalesMaster>>> Get()
         {
-            var data = await productService.GetAll();
+            var data = await salesMasterService.GetAll();
             return Ok(data);
         }
-
-        // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Product>> Get(Guid id)
+        [ProducesResponseType(typeof(SalesMaster), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<SalesMaster>> Get(Guid id)
         {
             try
             {
-                var data = await productService.Get(id);
+                var data = await salesMasterService.Get(id);
                 return Ok(data);
             }
             catch (Exception)
@@ -45,15 +42,14 @@ namespace Inventory.Microservice.Controllers
                 return BadRequest();
             }
         }
-
-        // POST api/<ProductController>
+        // POST api/<SalesMasterController>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> Post([FromBody] Product value)
+        public async Task<ActionResult> Post([FromBody] SalesMaster value)
         {
             try
             {
-                var result = await productService.Add(value);
+                var result = await salesMasterService.Add(value);
                 return Ok(result);
             }
             catch (Exception)
@@ -62,14 +58,14 @@ namespace Inventory.Microservice.Controllers
             }
         }
 
-        // PUT api/<ProductController>/5
+        // PUT api/<SalesMasterController>/5
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> Put([FromBody] Product value)
+        public async Task<ActionResult> Put([FromBody] SalesMaster value)
         {
             try
             {
-                var result = await productService.Update(value);
+                var result = await salesMasterService.Update(value);
                 return Ok(result);
             }
             catch (Exception)
@@ -78,7 +74,7 @@ namespace Inventory.Microservice.Controllers
             }
         }
 
-        // DELETE api/<ProductController>/5
+        // DELETE api/<SalesMasterController>/5
         [HttpDelete("{id}")]
         [ProducesDefaultResponseType]
         [ProducesResponseType((int)HttpStatusCode.OK)]
@@ -86,7 +82,7 @@ namespace Inventory.Microservice.Controllers
         {
             try
             {
-                var result = await productService.Delete(id);
+                var result = await salesMasterService.Delete(id);
                 return Ok(result);
             }
             catch (Exception)

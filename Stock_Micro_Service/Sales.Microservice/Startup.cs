@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,9 +39,24 @@ namespace Sales.Microservice
               options.UseSqlServer(SYS_DATA.DB_Connection));
 
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<ISalesMasterService, SalesMasterService>();
+
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ISalesDetailsRepository, SalesDetailsRepository>();
+            services.AddScoped<ISalesMasterRepository, SalesMasterRepository>();
 
             services.AddControllers();
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                });
+            });
+            services.AddMassTransitHostedService();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sales.Microservice", Version = "v1" });

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
     <ProjectReference Include="..\JwtAuth.Common\JwtAuth.Common.csproj" />
+    <ProjectReference Include="..\Logging.Common\Logging.Common.csproj" />
     <ProjectReference Include="..\Model.Common\Model.Common.csproj" />
     <ProjectReference Include="..\Service.Common\Service.Common.csproj" />
     <ProjectReference Include="..\Sidecar.Common\Sidecar.Common.csproj" />

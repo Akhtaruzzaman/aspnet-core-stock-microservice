@@ -214,7 +214,7 @@ namespace Infrastructure.Common.Repository
             }
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             try
             {
@@ -227,11 +227,11 @@ namespace Infrastructure.Common.Repository
             }
         }
 
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
         {
             try
             {
-                var result = this.Context.Set<TEntity>().Where(expression);
+                var result = this.Context.Set<TEntity>().Where(expression).ToList();
                 return result;
             }
             catch (Exception ex)

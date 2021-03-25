@@ -1,6 +1,5 @@
-﻿using Inventory.Microservice.Model;
-using Inventory.Microservice.Service.Interface;
-using Microsoft.AspNetCore.Authorization;
+﻿using Purchase.Microservice.Model;
+using Purchase.Microservice.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,34 +9,34 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Inventory.Microservice.Controllers
+namespace Purchase.Microservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class PurchaseController : ControllerBase
     {
-        IProductService productService;
-        public ProductController(IProductService productService)
+        IPurchaseMasterService purchaseMasterService;
+        public PurchaseController(IPurchaseMasterService purchaseMasterService)
         {
-            this.productService = productService;
+            this.purchaseMasterService = purchaseMasterService;
         }
-        // GET: api/<ProductController>
+        // GET: api/<PurchaseMasterController>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        [ProducesResponseType(typeof(IEnumerable<PurchaseMaster>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<PurchaseMaster>>> Get()
         {
-            var data = await productService.GetAll();
+            var data = await purchaseMasterService.GetAll();
             return Ok(data);
         }
 
-        // GET api/<ProductController>/5
+        // GET api/<PurchaseMasterController>/5
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Product>> Get(Guid id)
+        [ProducesResponseType(typeof(PurchaseMaster), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<PurchaseMaster>> Get(Guid id)
         {
             try
             {
-                var data = await productService.Get(id);
+                var data = await purchaseMasterService.Get(id);
                 return Ok(data);
             }
             catch (Exception)
@@ -46,14 +45,14 @@ namespace Inventory.Microservice.Controllers
             }
         }
 
-        // POST api/<ProductController>
+        // POST api/<PurchaseMasterController>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> Post([FromBody] Product value)
+        public async Task<ActionResult> Post([FromBody] PurchaseMaster value)
         {
             try
             {
-                var result = await productService.Add(value);
+                var result = await purchaseMasterService.Add(value);
                 return Ok(result);
             }
             catch (Exception)
@@ -62,14 +61,14 @@ namespace Inventory.Microservice.Controllers
             }
         }
 
-        // PUT api/<ProductController>/5
+        // PUT api/<PurchaseMasterController>/5
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> Put([FromBody] Product value)
+        public async Task<ActionResult> Put([FromBody] PurchaseMaster value)
         {
             try
             {
-                var result = await productService.Update(value);
+                var result = await purchaseMasterService.Update(value);
                 return Ok(result);
             }
             catch (Exception)
@@ -78,7 +77,7 @@ namespace Inventory.Microservice.Controllers
             }
         }
 
-        // DELETE api/<ProductController>/5
+        // DELETE api/<PurchaseMasterController>/5
         [HttpDelete("{id}")]
         [ProducesDefaultResponseType]
         [ProducesResponseType((int)HttpStatusCode.OK)]
@@ -86,7 +85,7 @@ namespace Inventory.Microservice.Controllers
         {
             try
             {
-                var result = await productService.Delete(id);
+                var result = await purchaseMasterService.Delete(id);
                 return Ok(result);
             }
             catch (Exception)

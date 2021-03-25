@@ -1,7 +1,7 @@
 ﻿using System;
-using Sales.Microservice.Model;
-using Sales.Microservice.Repository.Interface;
-using Sales.Microservice.Service.Interface;
+using Purchase.Microservice.Model;
+using Purchase.Microservice.Repository.Interface;
+using Purchase.Microservice.Service.Interface;
 using Service.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,48 +11,48 @@ using MassTransit;
 using EventBus.Common;
 using Newtonsoft.Json;
 
-namespace Sales.Microservice.Service
+namespace Purchase.Microservice.Service
 {
-    public class SalesMasterService : BaseService<SalesMaster>, ISalesMasterService
+    public class PurchaseMasterService : BaseService<PurchaseMaster>, IPurchaseMasterService
     {
-        private ISalesMasterRepository salesMasterRepository;
+        private IPurchaseMasterRepository purchaseMasterRepository;
         private readonly IPublishEndpoint publishEndpoint;
-        public SalesMasterService(ISalesMasterRepository salesMasterRepository, IPublishEndpoint publishEndpoint) : base(salesMasterRepository)
+        public PurchaseMasterService(IPurchaseMasterRepository purchaseMasterRepository, IPublishEndpoint publishEndpoint) : base(purchaseMasterRepository)
         {
-            this.salesMasterRepository = salesMasterRepository;
+            this.purchaseMasterRepository = purchaseMasterRepository;
             this.publishEndpoint = publishEndpoint;
         }
         override
-        public async Task<bool> Add(SalesMaster entity)
+        public async Task<bool> Add(PurchaseMaster entity)
         {
             try
             {
                 var invenoty_bus = new List<InventoryBusModel>();
 
                 var Date = DateTime.Today.ToString("yyyyMM");
-                var all = salesMasterRepository.GetAll(_ => _.VoucherNo.StartsWith(Date)).AsEnumerable().Max(x => x.VoucherNo);
+                var all = purchaseMasterRepository.GetAll(_ => _.VoucherNo.StartsWith(Date)).AsEnumerable().Max(x => x.VoucherNo);
                 entity.VoucherNo = GenerateVoucher.Generate(Date, all, 5);
                 entity.CreatedAt = DateTime.Now;
                 entity.Id = Guid.NewGuid();
-                foreach (var item in entity.SalesDetails)
+                foreach (var item in entity.PurchaseDetails)
                 {
-                    item.SalesMasterId = entity.Id;
+                    item.PurchaseMasterId = entity.Id;
                     item.CreatedAt = entity.CreatedAt;
                     item.CreatedBy = entity.CreatedBy;
                     item.Amount = item.UnitPrice * item.Qty;
 
+
                     invenoty_bus.Add(new InventoryBusModel()
                     {
                         ProductId = item.ProductId,
-                        in_qty = 0,
-                        out_qty = item.Qty,
-                        remarks = "From Sales. Voucher No: " + entity.VoucherNo,
+                        in_qty = item.Qty,
+                        out_qty = 0,
+                        remarks = "From Purchase. Voucher No: " + entity.VoucherNo,
                         createdBy = entity.CreatedBy
                     });
                 }
 
-                var s = await salesMasterRepository.Add(entity);
-
+                var s = await purchaseMasterRepository.Add(entity);
                 if (s)
                 {
                     var msg = new InventoryBusMessage()
@@ -69,11 +69,11 @@ namespace Sales.Microservice.Service
             }
         }
         override
-        public async Task<bool> Update(SalesMaster entity)
+        public async Task<bool> Update(PurchaseMaster entity)
         {
             try
             {
-                var get_single = await salesMasterRepository.Get(entity.Id);
+                var get_single = await purchaseMasterRepository.Get(entity.Id);
                 if (get_single == null)
                 {
                     throw new ArgumentNullException("Order not found.");
@@ -82,12 +82,12 @@ namespace Sales.Microservice.Service
                 get_single.UpdatedAt = entity.UpdatedAt;
                 get_single.UpdatedBy = entity.UpdatedBy;
 
-                var new_details = new List<SalesDetails>();
-                var deleted_details = new List<SalesDetails>();
+                var new_details = new List<PurchaseDetails>();
+                var deleted_details = new List<PurchaseDetails>();
 
-                foreach (var item in entity.SalesDetails)
+                foreach (var item in entity.PurchaseDetails)
                 {
-                    var details_single = entity.SalesDetails.Where(_ => _.Id.Equals(item.Id)).FirstOrDefault();
+                    var details_single = entity.PurchaseDetails.Where(_ => _.Id.Equals(item.Id)).FirstOrDefault();
                     if (details_single != null)
                     {
                         item.UnitPrice = details_single.UnitPrice;
@@ -104,7 +104,7 @@ namespace Sales.Microservice.Service
                         item.CreatedBy = entity.UpdatedBy ?? get_single.CreatedBy;
                     }
                 }
-                var s = await salesMasterRepository.Add(entity);
+                var s = await purchaseMasterRepository.Add(entity);
                 return s;
             }
             catch (Exception ex)

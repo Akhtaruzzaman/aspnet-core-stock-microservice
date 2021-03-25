@@ -17,6 +17,36 @@ namespace Inventory.Microservice.Service
             this.stockRepository = stockRepository;
         }
 
+        public async Task<bool> AddRange(List<Stock> entities)
+        {
+            try
+            {
+                foreach (var item in entities)
+                {
+                    var last_stock = stockRepository.GetAll(_ => _.ProductId.Equals(item.ProductId)).AsEnumerable().GroupBy(x => x.ProductId).Select(t => new Stock
+                    {
+                        ProductId = t.FirstOrDefault().ProductId,
+                        in_qty = t.Sum(x => x.in_qty),
+                        out_qty = t.Sum(x => x.out_qty),
+                        balance_qty = t.LastOrDefault().balance_qty
+                    }).FirstOrDefault();
+                    decimal bl_qty = 0;
+                    if (last_stock != null)
+                    {
+                        bl_qty = last_stock.balance_qty;
+                    }
+                    item.balance_qty = bl_qty + item.in_qty - item.out_qty;
+                    item.CreatedAt = DateTime.Now;
+                    item.Id = Guid.NewGuid();
+                }
+                return await stockRepository.AddMany(entities);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<Stock> GetAllStock()
         {
             try
@@ -40,7 +70,7 @@ namespace Inventory.Microservice.Service
         {
             try
             {
-                var query = stockRepository.GetAll(_=>_.ProductId.Equals(id)).AsEnumerable().GroupBy(x => x.ProductId).Select(t => new Stock
+                var query = stockRepository.GetAll(_ => _.ProductId.Equals(id)).AsEnumerable().GroupBy(x => x.ProductId).Select(t => new Stock
                 {
                     ProductId = t.FirstOrDefault().ProductId,
                     in_qty = t.Sum(x => x.in_qty),

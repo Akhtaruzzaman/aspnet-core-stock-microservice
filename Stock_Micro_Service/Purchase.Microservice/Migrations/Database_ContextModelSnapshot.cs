@@ -37,6 +37,9 @@ namespace Purchase.Microservice.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("PurchaseMasterId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Qty")
                         .HasColumnType("decimal(18,2)");
 
@@ -50,6 +53,8 @@ namespace Purchase.Microservice.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PurchaseMasterId");
 
                     b.ToTable("PurchaseDetails");
                 });
@@ -120,6 +125,17 @@ namespace Purchase.Microservice.Migrations
                     b.ToTable("Supplier");
                 });
 
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseDetails", b =>
+                {
+                    b.HasOne("Purchase.Microservice.Model.PurchaseMaster", "PurchaseMaster")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("PurchaseMasterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseMaster");
+                });
+
             modelBuilder.Entity("Purchase.Microservice.Model.PurchaseMaster", b =>
                 {
                     b.HasOne("Purchase.Microservice.Model.Supplier", "Supplier")
@@ -129,6 +145,11 @@ namespace Purchase.Microservice.Migrations
                         .IsRequired();
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Purchase.Microservice.Model.PurchaseMaster", b =>
+                {
+                    b.Navigation("PurchaseDetails");
                 });
 #pragma warning restore 612, 618
         }

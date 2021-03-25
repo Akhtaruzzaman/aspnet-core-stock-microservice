@@ -3,6 +3,72 @@
     "BaseUrl": "http://localhost:44382"
   },
   "Routes": [
+
+    // #region Inventory
+    // User
+    // User
+    // User
+    // User
+    {
+      "DownstreamPathTemplate": "/api/users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44327
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44327
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    // Auth
+    // Auth
+    // Auth
+    // Auth
+    {
+      "DownstreamPathTemplate": "/api/auth/GetToken",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44327
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/RefreshToken",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44327
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    // #endregion
+
+
+    // #region Inventory
+    // Inventory Product
+    // Inventory Product
+    // Inventory Product
+    // Inventory Product
     {
       "DownstreamPathTemplate": "/api/product",
       "DownstreamScheme": "https",
@@ -27,6 +93,10 @@
       "UpstreamPathTemplate": "/api/inventory/product/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
+    // Inventory Stock
+    // Inventory Stock
+    // Inventory Stock
+    // Inventory Stock
     {
       "DownstreamPathTemplate": "/api/stock",
       "DownstreamScheme": "https",
@@ -50,6 +120,127 @@
       ],
       "UpstreamPathTemplate": "/api/inventory/stock/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    // #endregion
+
+    // #region Purchase
+
+    // Supplier
+    // Supplier
+    // Supplier
+    // Supplier
+    {
+      "DownstreamPathTemplate": "/api/supplier",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44387
+        }
+      ],
+      "UpstreamPathTemplate": "/api/supplier",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/supplier/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44387
+        }
+      ],
+      "UpstreamPathTemplate": "/api/supplier/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    // Purchase
+    // Purchase
+    // Purchase
+    // Purchase
+    {
+      "DownstreamPathTemplate": "/api/transaction/purchase",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44387
+        }
+      ],
+      "UpstreamPathTemplate": "/api/purchase",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/transaction/purchase/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44387
+        }
+      ],
+      "UpstreamPathTemplate": "/api/purchase/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    // #endregion
+
+    // #region Sales
+
+    // Customer
+    // Customer
+    // Customer
+    // Customer
+    {
+      "DownstreamPathTemplate": "/api/customer",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44343
+        }
+      ],
+      "UpstreamPathTemplate": "/api/customer",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/customer/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44343
+        }
+      ],
+      "UpstreamPathTemplate": "/api/customer/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    // Sales
+    // Sales
+    // Sales
+    // Sales
+    {
+      "DownstreamPathTemplate": "/api/transaction/sales",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44343
+        }
+      ],
+      "UpstreamPathTemplate": "/api/sales",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/transaction/sales/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44343
+        }
+      ],
+      "UpstreamPathTemplate": "/api/sales/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
     }
+    // #endregion
   ]
 }
