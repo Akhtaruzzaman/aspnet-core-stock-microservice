@@ -9,9 +9,11 @@ namespace EventBus.Common
         public decimal out_qty { get; set; }
         public string remarks { get; set; }
         public Guid createdBy { get; set; }
+        public Guid OrderId { get; set; }
     }
     public class InventoryBusMessage
     {
         public string Name { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

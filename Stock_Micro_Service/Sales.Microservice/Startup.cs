@@ -56,7 +56,7 @@ namespace Sales.Microservice
             });
             services.AddMassTransitHostedService();
 
-
+            services.AddHostedService<StockPublisherService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sales.Microservice", Version = "v1" });
